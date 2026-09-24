@@ -1,0 +1,13 @@
+{
+  "name": "fabric-agent-marketplace",
+  "owner": {
+    "name": "Didier Rodriguez"
+  },
+  "plugins": [
+    {
+      "name": "fabric-agent",
+      "source": "./plugins/fabric-agent",
+      "description": "Especialista senior en Microsoft Fabric con doble perfil analista/ingeniero de datos, mas el procedimiento de adopcion de cero a Bronze, el sistema de estilo Notion para documentos HTML y los hooks de sesion."
+    }
+  ]
+}

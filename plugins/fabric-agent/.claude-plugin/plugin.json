@@ -1,0 +1,11 @@
+{
+  "name": "fabric-agent",
+  "displayName": "Fabric Agent",
+  "version": "0.1.0",
+  "description": "Perfil de especialista en Microsoft Fabric, procedimiento de adopcion de cero a Bronze, estilo Notion para documentos HTML y hooks de sesion. Portable: no contiene datos de ningun cliente.",
+  "author": {
+    "name": "Didier Rodriguez",
+    "email": "didier.rodriguez@ngds.ai"
+  },
+  "hooks": "./hooks/hooks.json"
+}

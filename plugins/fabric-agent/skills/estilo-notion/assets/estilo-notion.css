@@ -1,0 +1,305 @@
+/* ============================================================
+   Sistema visual — Notion monocromático
+   Norma del proyecto: project/ESTILO-NOTION.md
+   Enlazar con: <link rel="stylesheet" href="_estilo-notion.css">
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* ---- Tokens ---- */
+:root{
+  --bg:#FFFFFF; --fg:#000000; --muted:#6B6B6B; --border:#000000; --hover:#F2F2F2; --surface:#FFFFFF;
+  --font:"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --mono:ui-monospace, "Cascadia Mono", Consolas, "Courier New", monospace;
+  --gutter:68px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#000000; --fg:#FFFFFF; --muted:#A0A0A0; --border:#FFFFFF; --hover:#1A1A1A; --surface:#000000;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#000000; --fg:#FFFFFF; --muted:#A0A0A0; --border:#FFFFFF; --hover:#1A1A1A; --surface:#000000;
+}
+
+/* ---- Base ---- */
+*{ box-sizing:border-box; }
+html,body{ margin:0; padding:0; }
+body{
+  background:var(--bg); color:var(--fg);
+  font-family:var(--font);
+  font-size:16px; line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+::selection{ background:var(--fg); color:var(--bg); }
+a{ color:var(--fg); }
+code{ font-family:var(--mono); font-size:.87em; background:var(--hover); padding:1px 5px; border-radius:3px; }
+
+/* ---- Portada e identidad de página ---- */
+.cover{ height:140px; background:#0F0F0F; }
+
+.page{
+  max-width:900px; margin:0 auto;
+  padding:0 var(--gutter) 96px;
+}
+.page-icon{ font-size:60px; line-height:1; margin-top:-30px; margin-bottom:14px; }
+
+h1{
+  font-size:38px; font-weight:700; line-height:1.2;
+  margin:0 0 6px; letter-spacing:-.02em; text-wrap:balance;
+}
+.subtitle{ color:var(--muted); font-size:15.5px; margin:0; max-width:640px; }
+
+/* ---- Propiedades estilo Notion ---- */
+.props{ margin:22px 0 8px; display:flex; flex-direction:column; gap:2px; }
+.prop{ display:flex; align-items:flex-start; gap:10px; padding:4px 0; font-size:14px; }
+.prop .k{
+  flex:none; width:150px; color:var(--muted); font-weight:500; font-size:13.5px;
+  display:flex; align-items:center; gap:6px;
+}
+.prop .v{ flex:1; }
+
+/* ---- Bloques de texto ---- */
+h2.bt{
+  font-size:21px; font-weight:600; line-height:1.3;
+  margin:42px 0 10px; text-wrap:balance;
+}
+h3.bt{ font-size:17px; font-weight:600; margin:28px 0 8px; }
+p{ margin:0 0 12px; font-size:15.5px; max-width:640px; }
+p.muted, .muted{ color:var(--muted); }
+p.meta{ font-size:13px; color:var(--muted); }
+ul.bl, ol.bl{ margin:0 0 14px; padding-left:22px; max-width:640px; font-size:15.5px; }
+ul.bl li, ol.bl li{ margin-bottom:6px; }
+hr.div{ border:none; border-top:1px solid var(--border); opacity:.18; margin:34px 0; }
+
+/* ---- Pills ---- */
+.pill{
+  display:inline-block;
+  background:#F1F1EF; color:#000; border:1px solid #000;
+  border-radius:4px; padding:2px 8px; font-size:12.5px; font-weight:500;
+  white-space:nowrap;
+}
+:root[data-theme="dark"] .pill{ background:#242424; color:#fff; border-color:#fff; }
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) .pill{ background:#242424; color:#fff; border-color:#fff; }
+}
+
+/* ---- Callout ---- */
+.callout{
+  background:#F2F2F2; border-left:3px solid #000; border-radius:6px;
+  padding:14px 16px 14px 13px; display:flex; gap:10px;
+  margin:18px 0; max-width:820px;
+}
+:root[data-theme="dark"] .callout{ background:#1A1A1A; border-left-color:#fff; }
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) .callout{ background:#1A1A1A; border-left-color:#fff; }
+}
+.callout .ico{ flex:none; font-size:18px; line-height:1.45; }
+.callout .body{ flex:1; min-width:0; }
+.callout .body > :last-child{ margin-bottom:0; }
+.callout p{ font-size:14.5px; margin-bottom:8px; max-width:none; }
+.callout .lbl{
+  display:block; font-size:11.5px; font-weight:600; letter-spacing:.07em;
+  text-transform:uppercase; color:var(--muted); margin-bottom:5px;
+}
+
+/* ---- Toggle colapsable ---- */
+.toggle{ margin:10px 0; max-width:820px; }
+.toggle summary{
+  cursor:pointer; list-style:none; font-weight:600; font-size:16px;
+  padding:6px 0 6px 24px; position:relative; border-radius:4px;
+}
+.toggle summary::-webkit-details-marker{ display:none; }
+.toggle summary::before{
+  content:"▶"; position:absolute; left:4px; top:50%;
+  transform:translateY(-50%); font-size:10px; color:var(--muted);
+  transition:transform .15s ease;
+  transform-origin:center;
+}
+.toggle[open] > summary::before{ transform:translateY(-50%) rotate(90deg); }
+.toggle summary:hover{ background:var(--hover); }
+.toggle .tbody{ padding:4px 0 10px 24px; }
+.toggle .tbody > :last-child{ margin-bottom:0; }
+
+/* ---- Checklist ---- */
+.checklist{ margin:14px 0; max-width:820px; }
+.checklist .grp{
+  font-size:11.5px; font-weight:600; letter-spacing:.06em; text-transform:uppercase;
+  color:var(--muted); margin:20px 0 6px; padding-bottom:5px;
+  border-bottom:1px solid var(--border); opacity:1;
+}
+.checklist .grp:first-child{ margin-top:4px; }
+.check-item{ display:flex; align-items:flex-start; gap:10px; padding:5px 0; }
+.check-item input{
+  flex:none; width:16px; height:16px; margin:3px 0 0;
+  accent-color:#000; cursor:pointer;
+}
+:root[data-theme="dark"] .check-item input{ accent-color:#fff; }
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) .check-item input{ accent-color:#fff; }
+}
+.check-item label{ font-size:15px; cursor:pointer; flex:1; }
+.check-item input:checked + label{ color:var(--muted); text-decoration:line-through; }
+.check-item label .note{
+  display:block; font-size:13px; color:var(--muted); margin-top:2px;
+  text-decoration:none;
+}
+.check-item input:checked + label .note{ text-decoration:none; }
+
+/* ---- Barra de progreso ---- */
+.progress{ margin:18px 0 6px; max-width:820px; }
+.progress .track{
+  height:6px; background:var(--hover); border:1px solid var(--border);
+  border-radius:99px; overflow:hidden;
+}
+.progress .fill{
+  height:100%; width:0%; background:var(--fg);
+  transition:width .2s ease;
+}
+.progress .lbl{ font-size:13px; color:var(--muted); margin-top:7px; }
+.progress .lbl b{ color:var(--fg); font-weight:600; }
+
+/* ---- Tabla / vista de base de datos ---- */
+.tablewrap{ overflow-x:auto; margin:16px 0 22px; }
+table.db{
+  width:100%; border-collapse:collapse; font-size:14px;
+  border:1px solid var(--border);
+}
+table.db th{
+  text-align:left; font-size:11.5px; font-weight:600;
+  letter-spacing:.06em; text-transform:uppercase; color:var(--muted);
+  background:var(--hover);
+  padding:9px 12px; border:1px solid var(--border);
+  white-space:nowrap;
+}
+table.db td{
+  padding:11px 12px; border:1px solid var(--border);
+  vertical-align:top;
+}
+table.db td .note{ display:block; color:var(--muted); font-size:13px; margin-top:3px; }
+table.db tr:hover td{ background:var(--hover); }
+table.db td.k{ font-weight:600; }
+
+/* ---- Pestañas de vista ---- */
+.tabs{ display:flex; gap:20px; border-bottom:1px solid var(--border); margin:24px 0 0; }
+.tabs button{
+  font-family:var(--font); font-size:14px; font-weight:500;
+  background:none; border:none; color:var(--muted);
+  padding:8px 2px; cursor:pointer; border-bottom:2px solid transparent;
+  margin-bottom:-1px;
+}
+.tabs button.on{ color:var(--fg); font-weight:600; border-bottom-color:var(--fg); }
+
+/* ---- Buscador / input ---- */
+.searchbar{ display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin:18px 0 4px; }
+.searchbar input{
+  font-family:var(--font); font-size:14.5px;
+  background:var(--bg); color:var(--fg);
+  border:1px solid var(--border); border-radius:6px;
+  padding:8px 12px; min-width:260px; flex:1 1 260px;
+}
+.searchbar input::placeholder{ color:var(--muted); }
+.searchbar .count{ font-size:13px; color:var(--muted); white-space:nowrap; }
+
+/* ---- Botones ---- */
+button.btn{
+  font-family:var(--font); font-size:14px; font-weight:600;
+  background:var(--fg); color:var(--bg);
+  border:1px solid var(--border); border-radius:6px;
+  padding:8px 16px; cursor:pointer;
+}
+button.btn:hover{ background:var(--bg); color:var(--fg); }
+
+/* ---- Botón de tema ---- */
+#toggle-theme{
+  position:fixed; top:16px; right:16px; z-index:50;
+  width:30px; height:30px; border-radius:6px;
+  border:1px solid var(--border); background:var(--bg);
+  font-size:14px; line-height:1; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  padding:0;
+}
+#toggle-theme:hover{ background:var(--hover); }
+
+/* ---- Bloque de correo copiable ---- */
+.mailblock{
+  border:1px solid var(--border); border-radius:6px;
+  padding:22px 26px; margin:12px 0 0; max-width:820px;
+  font-size:14.5px;
+}
+.mailblock p{ font-size:14.5px; max-width:none; }
+.mailblock h4{ font-size:15px; font-weight:600; margin:20px 0 6px; }
+.mailblock h4:first-of-type{ margin-top:14px; }
+.mailblock ul{ margin:4px 0 12px; padding-left:20px; }
+.mailblock li{ margin-bottom:8px; }
+
+/* ---- Pie ---- */
+footer.pagefoot{
+  margin-top:52px; padding-top:18px;
+  border-top:1px solid var(--border);
+  font-size:12.5px; color:var(--muted);
+  display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;
+}
+
+/* ---- Responsive: una sola media query ---- */
+@media (max-width:640px){
+  :root{ --gutter:20px; }
+  h1{ font-size:30px; }
+  h2.bt{ font-size:19px; }
+  .cover{ height:100px; }
+  .page-icon{ font-size:48px; margin-top:-24px; }
+  .prop{ flex-direction:column; gap:1px; }
+  .prop .k{ width:auto; }
+  .mailblock{ padding:18px 16px; }
+}
+
+/* ============================================================
+   Versión impresa / exportación a PDF
+   Norma del proyecto, añadida el 2026-09-21 tras exportar
+   banner-medicion-estimado.html. No afecta la vista en pantalla.
+   Un documento que necesite otra densidad redefine estas reglas
+   en su <style> propio, después del <link>.
+   ============================================================ */
+@page{ margin:11mm 12mm; }
+
+@media print{
+  #toggle-theme{ display:none; }
+  footer.pagefoot{ display:none; }
+
+  .page{ max-width:none; --gutter:0; padding-bottom:0; }
+  .cover{ height:54px; }
+  .page-icon{ font-size:30px; margin-top:-15px; margin-bottom:6px; }
+  h1{ font-size:24px; margin:0 0 6px; }
+  .subtitle{ font-size:12px; max-width:none; }
+
+  .props{ margin:12px 0 4px; }
+  .prop{ padding:1px 0; font-size:11.5px; }
+
+  h2.bt{ font-size:15.5px; margin:16px 0 5px; padding-top:8px; break-after:avoid; }
+  p{ font-size:11.8px; line-height:1.4; margin:0 0 7px; max-width:none; }
+  ul{ margin:4px 0 8px; padding-left:17px; }
+  li{ font-size:11.8px; line-height:1.4; margin-bottom:4px; }
+
+  .tablewrap{ margin:8px 0 12px; overflow:visible; }
+  table.db{ font-size:10.2px; }
+  table.db th{ padding:4px 6px; font-size:9px; }
+  table.db td{ padding:4px 6px; }
+  table.db td .note{ font-size:9.5px; margin-top:1px; }
+  tr{ break-inside:avoid; }
+
+  .callout{ padding:8px 10px 8px 9px; margin:8px 0; }
+  .callout p{ font-size:11.2px; line-height:1.4; margin-bottom:5px; }
+  .callout .ico{ font-size:14px; }
+  .callout .lbl{ font-size:11px; }
+
+  .toggle{ margin:6px 0; }
+  .toggle summary{ font-size:12.5px; padding:4px 0 4px 22px; }
+  .toggle .tbody{ padding:2px 0 4px 20px; }
+
+  .checklist .check-item{ padding:2px 0; }
+  .check-item label{ font-size:11.8px; }
+
+  .searchbar{ display:none; }
+
+  .cifras, .embudo, .callout, .tablewrap, .paso{ break-inside:avoid; }
+}

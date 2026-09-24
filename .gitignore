@@ -1,0 +1,19 @@
+# Nada de clientes entra a este repositorio
+contexto-cliente.md
+!plugins/fabric-agent/plantillas/contexto-cliente.md
+knowledge-base/
+
+# Credenciales
+.env
+*.pem
+credentials.json
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Editor y sistema
+.claude/settings.local.json
+.vscode/
+.DS_Store
+Thumbs.db
