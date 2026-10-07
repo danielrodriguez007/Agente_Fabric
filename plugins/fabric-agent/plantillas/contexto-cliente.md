@@ -52,7 +52,7 @@ Los dueños sin confirmar se dicen explícitamente, no se asumen.
 
 Las **cinco preguntas por fuente** (dónde está desplegada · qué tipo de conexión
 aplica · con qué credenciales se accede · quién habilita · quién autoriza) son el
-protocolo para cualquier fuente nueva. Ver la skill `fabric-cero-a-bronce`.
+protocolo para cualquier fuente nueva. Ver la skill `guia-fabric` del plugin.
 
 ## 6. Secuencia de trabajo
 

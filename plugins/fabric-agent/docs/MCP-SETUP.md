@@ -1,6 +1,8 @@
 # Guía de activación de MCP servers para Microsoft Fabric
 
-Este documento solo describe **cómo** activar cada MCP server cuando decidas hacerlo. No se ha instalado ni configurado nada todavía — no existe `.mcp.json` en este proyecto. Cuando quieras activar alguno, crea (o pide que se cree) `.mcp.json` en la raíz de este proyecto con el bloque correspondiente.
+Este documento describe **cómo** activar cada MCP server en un proyecto. El plugin no instala ninguno: cada proyecto decide cuáles usa y los declara en su propio `.mcp.json`, en la raíz del repositorio.
+
+**Qué está comprobado en uso y qué no.** El Fabric Core MCP (sección 1) y la Fabric CLI (al final) se usaron contra un tenant real el 2026-10-06. Las demás secciones describen opciones según la documentación de Microsoft: confirma su estado en el enlace de cada una al momento de activarlas.
 
 Todos los MCP oficiales de Microsoft para Fabric/Power BI requieren una cuenta **Microsoft Entra ID** con acceso al tenant/capacidad de Fabric correspondiente. Confirma que tienes ese acceso antes de intentar usarlos.
 
@@ -10,7 +12,24 @@ Qué hace: expone las APIs públicas de Fabric como herramientas MCP tipadas —
 
 Estado: **Preview** — la configuración puede cambiar antes de GA.
 
-Instalación: ninguna, es un endpoint remoto. Solo agrega la URL a tu `.mcp.json` y autentica con tu cuenta la primera vez que se use (flujo interactivo de login).
+Instalación: ninguna, es un endpoint remoto. Agrega este bloque a `.mcp.json` y autentica con tu cuenta la primera vez que se use (flujo interactivo de login):
+
+```json
+{
+  "mcpServers": {
+    "fabric": {
+      "type": "http",
+      "url": "https://api.fabric.microsoft.com/v1/mcp/core"
+    }
+  }
+}
+```
+
+Lo que se comprobó en uso (2026-10-06):
+
+- **Solo administra recursos**: workspaces, items, permisos, carpetas y capacidades. No lee filas de tablas ni ejecuta pipelines.
+- **Su login es independiente del de la Fabric CLI.** Autenticar uno no autentica el otro.
+- **Para inspeccionar un tenant rinde más la CLI** (`fab ls`, `fab export`, `fab job run-list`): ver el final de este documento.
 
 Referencia: https://learn.microsoft.com/en-us/rest/api/fabric/articles/mcp-servers/core-remote/overview-core-mcp-server
 
@@ -61,6 +80,11 @@ Ya es **GA** (General Availability) y es la forma más robusta hoy de automatiza
 
 Instalación: `pip install ms-fabric-cli` (paquete `ms-fabric-cli` en PyPI) o ver el repo oficial.
 
+Lo que se comprobó en uso (2026-10-06):
+
+- **El login es interactivo** (`fab auth login`) y la CLI mantiene **una sola sesión** a la vez. Si Claude corre en una terminal no interactiva, el login se hace en una ventana aparte; en Windows: `Start-Process powershell -ArgumentList '-NoExit','-Command','fab auth login'`.
+- **Antes de pedirle al usuario que verifique algo en el portal, se revisa con la CLI**: `fab ls` para recorrer workspaces e items, `fab export` para comparar un notebook del portal con el del repositorio, `fab job run-list` para ver si un pipeline corrió. Al comparar notebooks, enmascara cualquier secreto en la salida.
+
 Repo: https://github.com/microsoft/fabric-cli
 Docs: https://learn.microsoft.com/en-us/rest/api/fabric/articles/fabric-command-line-interface
 
@@ -69,9 +93,9 @@ Docs: https://learn.microsoft.com/en-us/rest/api/fabric/articles/fabric-command-
 ```json
 {
   "mcpServers": {
-    "fabric-core": {
+    "fabric": {
       "type": "http",
-      "url": "<URL del endpoint remoto de Fabric Core MCP — confirmar en la doc oficial al momento de activarlo>"
+      "url": "https://api.fabric.microsoft.com/v1/mcp/core"
     },
     "fabric-local": {
       "command": "<comando de arranque del Fabric MCP Server local, según instrucciones de microsoft/mcp>"
@@ -87,4 +111,4 @@ Docs: https://learn.microsoft.com/en-us/rest/api/fabric/articles/fabric-command-
 }
 ```
 
-No se han rellenado los valores exactos de comando/URL a propósito: cambian con las versiones y requieren que confirmes la más reciente en la documentación oficial (enlaces arriba) en el momento en que actives cada uno.
+Solo la URL de Fabric Core está rellenada, porque es la única comprobada en uso. Las demás cambian con las versiones: confirma la vigente en la documentación oficial (enlaces arriba) al activar cada una.

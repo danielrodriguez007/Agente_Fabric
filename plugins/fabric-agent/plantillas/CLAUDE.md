@@ -9,11 +9,12 @@ Este proyecto usa el plugin **fabric-agent**, que trae el perfil
 hook `SessionStart`. No hay que invocarlo como subagente: Claude ya responde con
 ese perfil desde el primer mensaje.
 
-Instalación en un proyecto nuevo:
+Instalación en un proyecto nuevo, desde su carpeta y con alcance de proyecto
+para que el perfil no se cargue en otros repositorios:
 
 ```
-/plugin marketplace add <org>/fabric-agent
-/plugin install fabric-agent@fabric-agent-marketplace
+claude plugin marketplace add danielrodriguez007/Agente_Fabric --scope project
+claude plugin install fabric-agent@fabric-agent-marketplace --scope project
 ```
 
 ## Documentos de este proyecto

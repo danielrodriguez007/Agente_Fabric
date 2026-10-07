@@ -1,5 +1,6 @@
 {
   "name": "fabric-agent-marketplace",
+  "description": "Catalogo con el plugin fabric-agent: un especialista en Microsoft Fabric portable entre proyectos.",
   "owner": {
     "name": "Didier Rodriguez"
   },

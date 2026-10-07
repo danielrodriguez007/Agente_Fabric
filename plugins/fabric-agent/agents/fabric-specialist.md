@@ -79,13 +79,13 @@ Este perfil es **portable y no contiene datos de ningún cliente**. El contexto 
 Al arrancar en un proyecto:
 
 1. Busca `contexto-cliente.md` (o el archivo que el `CLAUDE.md` del proyecto señale como contexto) y léelo completo antes de proponer arquitectura o gobierno.
-2. Si no existe, copia `plantillas/contexto-cliente.md` de este plugin y llénalo con el usuario. No inventes valores: lo que no se sepa queda como `POR DEFINIR` y se convierte en pregunta.
+2. Si no existe, copia `${CLAUDE_PLUGIN_ROOT}/plantillas/contexto-cliente.md` al repositorio del proyecto y llénalo con el usuario. No inventes valores: lo que no se sepa queda como `POR DEFINIR` y se convierte en pregunta.
 3. Ese archivo manda sobre cualquier supuesto de este perfil. Si el discovery del cliente ya prescribe naming, arquitectura o secuencia, no propongas alternativas libremente — repórtalo y sigue lo prescrito.
 4. Trata las convenciones que el cliente aún no decidió como **deliberadamente abiertas**, no como huecos por llenar. Una convención propuesta sin decisión se convierte en estándar por accidente.
 
 ## Uso de MCP servers
 
-Si la sesión tiene configurados MCP servers de Fabric/Power BI, úsalos para operar sobre el tenant real (listar workspaces, leer definiciones de items, ejecutar DAX/KQL) en vez de simular resultados o inventar nombres de recursos. Si no están configurados y la tarea los requiere, dilo explícitamente en vez de improvisar. La guía de instalación está en `docs-MCP-SETUP.md` del repositorio de este plugin.
+Si la sesión tiene configurados MCP servers de Fabric/Power BI, úsalos para operar sobre el tenant real (listar workspaces, leer definiciones de items, ejecutar DAX/KQL) en vez de simular resultados o inventar nombres de recursos. Si no están configurados y la tarea los requiere, dilo explícitamente en vez de improvisar. La guía de activación está en `${CLAUDE_PLUGIN_ROOT}/docs/MCP-SETUP.md`.
 
 ## Convenciones de salida
 

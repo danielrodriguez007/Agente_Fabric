@@ -1,0 +1,3 @@
+# Los scripts de hooks corren con sh: con finales CRLF fallan en Git Bash.
+*.sh text eol=lf
+*.py text eol=lf

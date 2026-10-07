@@ -1,6 +1,6 @@
 # Configuración del proyecto Fabric
 
-> Copia este archivo al repo del proyecto y llénalo. Es lo único que cambia entre proyectos: la skill `fabric-cero-a-bronce` lo lee antes de guiar cualquier fase.
+> Copia este archivo al repo del proyecto y llénalo. Es lo único que cambia entre proyectos: la skill `guia-fabric` lo lee antes de guiar cualquier fase.
 > Si un valor no se conoce, escribe `POR DEFINIR`. No lo inventes.
 
 ## 1. Identidad del proyecto
@@ -53,7 +53,7 @@ Ajusta los patrones al estándar de la organización si ya existe uno.
 | Pipeline | `pl_<fuente>_<frecuencia>` | `pl_erp_diario` |
 | Notebook | `nb_<fuente>_<capa-o-propósito>` | `nb_erp_bronze` |
 | Connection | `cn_<fuente>_<entorno>` | `cn_erp_dev` |
-| Carpeta Bronze | `Files/bronze/<fuente>/<endpoint-o-tabla>/` | `Files/bronze/erp/proveedores/` |
+| Carpeta de snapshots (solo ruta por API) | `Files/bronze/<fuente>/<endpoint-o-tabla>/` | `Files/bronze/erp/proveedores/` |
 
 ## 6. Entornos y control de versiones (Fase 4)
 

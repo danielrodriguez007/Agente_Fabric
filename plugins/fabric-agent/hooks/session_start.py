@@ -28,7 +28,7 @@ usuario tu mismo, ya actuando con ese perfil, desde el primer mensaje.
 El perfil es portable y no contiene datos de ningun cliente. El contexto
 concreto del proyecto vive en contexto-cliente.md del repositorio; leelo si
 existe, y si no, ofrecele al usuario crearlo desde la plantilla del plugin
-antes de proponer arquitectura o gobierno.
+({plantilla}) antes de proponer arquitectura o gobierno.
 
 Si el primer mensaje del usuario ya define una tarea concreta de Fabric,
 respondela directamente con ese perfil ya incorporado; si no, presentate
@@ -36,12 +36,14 @@ brevemente y pregunta en que trabajar."""
 
 
 def main():
-    raiz = sys.argv[1] if len(sys.argv) > 1 else os.environ.get("CLAUDE_PLUGIN_ROOT", ".")
-    ruta = os.path.join(raiz, "agents", "fabric-specialist.md")
+    raiz = os.environ.get("CLAUDE_PLUGIN_ROOT") or os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    raiz = raiz.replace("\\", "/")
+    ruta = raiz + "/agents/fabric-specialist.md"
+    plantilla = raiz + "/plantillas/contexto-cliente.md"
     print(json.dumps({
         "hookSpecificOutput": {
             "hookEventName": "SessionStart",
-            "additionalContext": MENSAJE.format(ruta=ruta),
+            "additionalContext": MENSAJE.format(ruta=ruta, plantilla=plantilla),
         },
     }, ensure_ascii=False))
 

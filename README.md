@@ -13,15 +13,34 @@ proyectos se parametriza en `plantillas/contexto-cliente.md`.
 
 ## Instalación
 
+Se instala **por proyecto**, no a nivel de usuario. Sus hooks se disparan en
+cada sesión donde el plugin está activo: instalado a nivel de usuario, el perfil
+de Fabric se cargaría también en proyectos que no tienen nada que ver.
+
+Desde la carpeta del proyecto:
+
 ```
-/plugin marketplace add <org>/fabric-agent
-/plugin install fabric-agent@fabric-agent-marketplace
+claude plugin marketplace add danielrodriguez007/Agente_Fabric --scope project
+claude plugin install fabric-agent@fabric-agent-marketplace --scope project
 ```
 
-Para probarlo sin instalar, desde la carpeta del proyecto:
+`project` deja la instalación en `.claude/settings.json`, compartida con quien
+clone el repositorio. Para que quede solo en tu máquina, usa `--scope local`.
+
+Para probarlo sin instalar:
 
 ```
 claude --plugin-dir /ruta/a/fabric-agent/plugins/fabric-agent
+```
+
+**Requisitos.** Python 3 disponible como `python3`, `python` o `py`. Claude
+Code ejecuta los hooks con `sh` en macOS y Linux, y con Git Bash en Windows.
+
+**Validación.** Antes de publicar un cambio:
+
+```
+claude plugin validate . --strict
+claude plugin validate plugins/fabric-agent --strict
 ```
 
 ## Qué trae
@@ -29,9 +48,10 @@ claude --plugin-dir /ruta/a/fabric-agent/plugins/fabric-agent
 | Componente | Qué hace |
 |---|---|
 | `agents/fabric-specialist.md` | El perfil: doble lente analista/ingeniero, principios de arquitectura, conceptos que se confunden, gobierno, secretos, CI/CD, costo y convenciones de salida |
-| `skills/guia-fabric/` | Procedimiento de adopción en 9 fases, de cero a la primera fuente en Bronze, cada fase con su criterio de salida |
+| `skills/guia-fabric/` | Procedimiento de adopción en 9 fases, de cero a la primera fuente en Bronze, cada fase con su criterio de salida. Se activa diciendo "guía fabric" |
 | `skills/estilo-notion/` | Sistema visual monocromático para los documentos HTML del proyecto, con CSS y JS listos |
-| `hooks/hooks.json` | `SessionStart` adopta el perfil sin delegar; `turn_timer` avisa si un turno pasa de 10 minutos |
+| `hooks/` | `SessionStart` adopta el perfil sin delegar; `turn_timer` avisa si un turno pasa de 10 minutos; `py.sh` elige el intérprete de Python disponible |
+| `docs/MCP-SETUP.md` | Cómo activar los MCP de Fabric y la Fabric CLI, separando lo comprobado en uso de lo que solo describe la documentación |
 | `plantillas/` | `contexto-cliente.md`, `PREFERENCIAS.md` y un `CLAUDE.md` de arranque |
 
 ## Por qué el hook en vez de un subagente
@@ -53,9 +73,11 @@ informe en vez de conversar—. El perfil se incorpora, no se consulta.
 
 ## Estado
 
-Versión 0.1.0. Lo que falta:
+Versión 0.2.0. Pasa `claude plugin validate --strict` sin errores ni avisos.
 
-- Las referencias por fase de `skills/guia-fabric/referencias/` (fases 0 a 8),
-  los tres documentos transversales y las plantillas de notebooks y de correo.
+Lo que falta:
+
+- Una referencia escrita por fase de la guía. Mientras no exista, la skill guía
+  con el mapa de fases y confirma cada paso en Microsoft Learn.
 - Dos decisiones abiertas del procedimiento: si las 9 fases sirven en ese orden,
   y si el patrón de workspace lleva el ambiente (`ws-<dominio>-<entorno>`) o no.
