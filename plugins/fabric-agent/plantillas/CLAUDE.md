@@ -17,6 +17,31 @@ claude plugin marketplace add danielrodriguez007/Agente_Fabric --scope project
 claude plugin install fabric-agent@fabric-agent-marketplace --scope project
 ```
 
+Después, agregar a `.claude/settings.json` del proyecto las dos claves de
+`plantillas/settings.json` del plugin (`"model": "sonnet"` y
+`"advisorModel": "opus"`). Se agregan, no se copia el archivo encima: la
+instalación anterior ya escribió ahí el plugin habilitado.
+
+## Esquema de modelos: principal Sonnet, asesor Opus, subagente Haiku
+
+- **Principal (Sonnet):** conversa con el usuario y hace el trabajo rutinario
+  (código, consultas, operaciones y respuestas).
+- **Asesor (Opus, tool advisor):** se consulta antes de decisiones de
+  arquitectura o planificación, ante fallos ambiguos o que no convergen y en la
+  verificación final.
+- **Subagente explorador (Haiku, `fabric-agent:explorador`):** el principal
+  puede delegarle sin pedir permiso las tareas de solo lectura. No se le delegan
+  las decisiones de diseño, la escritura de archivos, los comandos que operan
+  sistemas externos ni las respuestas al usuario. Lo que el explorador encuentra
+  lo ubica; antes de citarlo o decidir con él, el principal lee el pasaje en el
+  archivo.
+- Para sesiones de arquitectura pesadas, el usuario puede usar `/model opus`
+  solo en esa sesión.
+
+El perfil `fabric-specialist` no se invoca como subagente: la conversación no se
+reenvía a otro agente. El explorador es la excepción, porque no conversa, solo
+lee.
+
 ## Documentos de este proyecto
 
 - `contexto-cliente.md` — **todo lo que el agente sabe del cliente vive aquí.**

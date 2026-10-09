@@ -58,4 +58,15 @@ Está automatizado con el hook `turn_timer.py` del plugin, pero el hook solo se
 dispara al terminar una herramienta: ante una tarea que se prevea larga, avisar
 desde el inicio y dividirla en pasos con actualizaciones intermedias.
 
-## 7. (Espacio para futuras preferencias)
+## 7. Cierre de sesión al despedirse
+
+Cuando el usuario se despide ("adiós", "chao", "good bye" o equivalente), antes
+de responder: revisar la conversación y guardar lo que enriquece el proyecto, y
+si el proyecto tiene `project/INSUMOS-ENTREGABLES.md`, anotar ahí lo hecho bajo
+el entregable al que sirve, con fecha y evidencia. Así, al escribir cada
+entregable, el material ya está reunido en vez de reconstruirse de memoria.
+
+Está automatizado con el hook `despedida.py` del plugin, que solo mira mensajes
+cortos para no dispararse a mitad de una instrucción larga.
+
+## 8. (Espacio para futuras preferencias)

@@ -24,7 +24,7 @@ def ruta_estado(session_id):
 def main():
     modo = sys.argv[1] if len(sys.argv) > 1 else "check"
     try:
-        entrada = json.load(sys.stdin)
+        entrada = json.loads(sys.stdin.buffer.read().decode("utf-8", "replace"))
     except Exception:
         entrada = {}
     ruta = ruta_estado(entrada.get("session_id"))

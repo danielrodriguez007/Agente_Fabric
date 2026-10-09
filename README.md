@@ -48,11 +48,12 @@ claude plugin validate plugins/fabric-agent --strict
 | Componente | Qué hace |
 |---|---|
 | `agents/fabric-specialist.md` | El perfil: doble lente analista/ingeniero, principios de arquitectura, conceptos que se confunden, gobierno, secretos, CI/CD, costo y convenciones de salida |
+| `agents/explorador.md` | Subagente de solo lectura en Haiku (`fabric-agent:explorador`): busca, lee y resume archivos sin modificarlos |
 | `skills/guia-fabric/` | Procedimiento de adopción en 9 fases, de cero a la primera fuente en Bronze, cada fase con su criterio de salida. Se activa diciendo "guía fabric" |
 | `skills/estilo-notion/` | Sistema visual monocromático para los documentos HTML del proyecto, con CSS y JS listos |
-| `hooks/` | `SessionStart` adopta el perfil sin delegar; `turn_timer` avisa si un turno pasa de 10 minutos; `py.sh` elige el intérprete de Python disponible |
+| `hooks/` | `SessionStart` adopta el perfil sin reenviar la conversación a otro agente y recuerda el esquema de modelos; `turn_timer` avisa si un turno pasa de 10 minutos; `despedida` hace el cierre de sesión al despedirse (guarda lo valioso y alimenta el registro de insumos); `py.sh` elige el intérprete de Python disponible |
 | `docs/MCP-SETUP.md` | Cómo activar los MCP de Fabric y la Fabric CLI, separando lo comprobado en uso de lo que solo describe la documentación |
-| `plantillas/` | `contexto-cliente.md`, `PREFERENCIAS.md` y un `CLAUDE.md` de arranque |
+| `plantillas/` | `contexto-cliente.md`, `PREFERENCIAS.md`, `INSUMOS-ENTREGABLES.md`, un `CLAUDE.md` de arranque y el `settings.json` con el esquema de modelos |
 
 ## Por qué el hook en vez de un subagente
 
@@ -62,18 +63,38 @@ instrucciones desde el primer mensaje. Tratarlo como subagente agrega un
 intermediario —hay que invocarlo, pierde el hilo de la conversación y devuelve un
 informe en vez de conversar—. El perfil se incorpora, no se consulta.
 
+## Esquema de modelos: principal Sonnet, asesor Opus, subagente Haiku
+
+- **Principal (Sonnet):** conversa con el usuario y hace el trabajo rutinario.
+- **Asesor (Opus, tool advisor):** se consulta antes de decisiones de
+  arquitectura o planificación, ante fallos ambiguos o que no convergen y en la
+  verificación final.
+- **Explorador (Haiku):** recibe sin pedir permiso las tareas de solo lectura.
+  No se le delegan decisiones de diseño, escritura de archivos, comandos sobre
+  sistemas externos ni respuestas al usuario.
+
+El plugin trae el explorador y el recordatorio del esquema en el hook, pero **no
+puede fijar el modelo**: el `settings.json` de un plugin solo admite las claves
+`agent` y `subagentStatusLine`, y descarta las demás. El modelo principal y el
+del asesor se fijan en cada proyecto, agregando a su `.claude/settings.json` las
+dos claves de `plantillas/settings.json`. Para una sesión de arquitectura
+pesada, `/model opus` cambia el principal solo en esa sesión.
+
 ## Cómo arrancar un proyecto nuevo
 
 1. Instalar el plugin.
-2. Copiar `plantillas/contexto-cliente.md` al repositorio del proyecto y llenarlo
+2. Agregar a `.claude/settings.json` del proyecto `"model": "sonnet"` y
+   `"advisorModel": "opus"` (están en `plantillas/settings.json`). Se agregan a
+   las claves que ya dejó la instalación; no se copia el archivo encima.
+3. Copiar `plantillas/contexto-cliente.md` al repositorio del proyecto y llenarlo
    con el usuario. Lo que no se sepa queda como `POR DEFINIR`: es una pregunta,
    no un hueco que se rellena inventando.
-3. Copiar `plantillas/PREFERENCIAS.md` y `plantillas/CLAUDE.md`, ajustar nombres.
-4. Decir **"guía fabric"** para entrar al procedimiento de fases.
+4. Copiar `plantillas/PREFERENCIAS.md` y `plantillas/CLAUDE.md`, ajustar nombres.
+5. Decir **"guía fabric"** para entrar al procedimiento de fases.
 
 ## Estado
 
-Versión 0.2.0. Pasa `claude plugin validate --strict` sin errores ni avisos.
+Versión 0.3.0. Pasa `claude plugin validate --strict` sin errores ni avisos.
 
 Lo que falta:
 
