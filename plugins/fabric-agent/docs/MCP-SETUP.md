@@ -84,6 +84,7 @@ Lo que se comprobó en uso (2026-10-06):
 
 - **El login es interactivo** (`fab auth login`) y la CLI mantiene **una sola sesión** a la vez. Si Claude corre en una terminal no interactiva, el login se hace en una ventana aparte; en Windows: `Start-Process powershell -ArgumentList '-NoExit','-Command','fab auth login'`.
 - **Antes de pedirle al usuario que verifique algo en el portal, se revisa con la CLI**: `fab ls` para recorrer workspaces e items, `fab export` para comparar un notebook del portal con el del repositorio, `fab job run-list` para ver si un pipeline corrió. Al comparar notebooks, enmascara cualquier secreto en la salida.
+- **Antes de operar, `fab auth status`: la sesión recuerda la última cuenta, que puede ser de otro tenant.** Con dos clientes, una sesión que quedó abierta del anterior respondía `NotFound` sobre un workspace que sí existe. Revisa cuenta y tenant; si no coinciden, `fab auth logout` y el login en ventana aparte. Verificado en uso, 2026-11-19.
 
 Repo: https://github.com/microsoft/fabric-cli
 Docs: https://learn.microsoft.com/en-us/rest/api/fabric/articles/fabric-command-line-interface

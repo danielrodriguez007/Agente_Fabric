@@ -70,3 +70,11 @@ Está automatizado con el hook `despedida.py` del plugin, que solo mira mensajes
 cortos para no dispararse a mitad de una instrucción larga.
 
 ## 8. (Espacio para futuras preferencias)
+
+## 9. Pantalla o conector que no se ha visto: pedir la captura antes de prescribir
+
+Si hay que indicar campos, pestañas o etiquetas de una pantalla o de un conector
+de Fabric que no está confirmado (otra versión, otro idioma, un conector poco
+documentado), pedirle al usuario la captura o los nombres exactos antes de
+describir los pasos. No adivinar nombres de campos: corregir pasos inventados
+cuesta más que pedir la captura.
